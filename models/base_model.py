@@ -2,6 +2,7 @@
 
 import uuid
 import datetime
+import models
 
 class BaseModel:
     """
@@ -12,6 +13,7 @@ class BaseModel:
         created_at (datetime): the datetime when an instance is created.
         updated_at (datetime): the datetime when an instance is created and updated every time the object is changed.
     """
+
     def __init__(self, *args, **kwargs):
         """
         Constructor of the BaseModel class.
@@ -36,7 +38,8 @@ class BaseModel:
             # If kwargs is empty, create a unique id and set created_at as the current datetime.
             self.id = str(uuid.uuid4())
             self.created_at = datetime.datetime.now()
-        self.updated_at = datetime.datetime.now()
+            self.updated_at = datetime.datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """
@@ -55,6 +58,7 @@ class BaseModel:
             None
         """
         self.updated_at = datetime.datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
@@ -68,4 +72,3 @@ class BaseModel:
         dict_rep["created_at"] = self.created_at.isoformat()
         dict_rep["updated_at"] = self.updated_at.isoformat()
         return dict_rep
-
