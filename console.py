@@ -89,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        args = args.split()
+        args = shlex.split(args)
         if len(args) < 2:
             print("** instance id missing **")
             return
@@ -103,7 +103,8 @@ class HBNBCommand(cmd.Cmd):
         if key not in models_dict:
             print("** no instance found **")
             return
-        models.storage.delete(models_dict[key])
+        del models_dict[key]
+        models.storage.save()
         
     def do_all(self, args):
         """Prints all string representation of all instances based or not on the class name."""
