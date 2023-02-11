@@ -20,7 +20,7 @@ class HBNBCommand(cmd.Cmd):
     """
     Class HBNBCommand that implements the command interpreter
     """
-    prompt = "(hbnb) "
+    prompt = "(>>>>) "
     classes = {'BaseModel': BaseModel, 'User': User, 'Amenity': Amenity, 'State': State,
            'Place': Place, 'Review': Review}
 
