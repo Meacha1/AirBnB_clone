@@ -214,6 +214,8 @@ class HBNBCommand(cmd.Cmd):
         tokensA = shlex.split(argument)
         dic = models.storage.all()
         num_instances = 0
+        if not tokensA[0]:
+            print("** class name missing **")
         if tokensA[0] not in self.classes:
             print("** class doesn't exist **")
             return
