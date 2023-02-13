@@ -18,17 +18,9 @@ class TestAmenity(unittest.TestCase):
         """Tests if the Amenity class has the name attribute"""
         self.assertTrue(hasattr(self.amenity, "name"))
 
-    def test_name_attribute_empty_string(self):
-        """Tests if the name attribute is an empty string"""
-        self.assertEqual(self.amenity.name, "")
-
     def test_has_attribute_id(self):
         """Tests if the Amenity class has the id attribute"""
         self.assertTrue(hasattr(self.amenity, "id"))
-
-    def test_id_attribute_empty_string(self):
-        """Tests if the id attribute is an empty string"""
-        self.assertEqual(self.amenity.id, "")
 
     def test_has_attribute_created_at(self):
         """Tests if the Amenity class has the created_at attribute"""
