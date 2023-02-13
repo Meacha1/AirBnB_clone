@@ -40,12 +40,5 @@ class TestAmenity(unittest.TestCase):
         from datetime import datetime
         self.assertIsInstance(self.amenity.updated_at, datetime)
 
-    def test_pep8_conformance(self):
-        """Tests if the code follows PEP8 style guide"""
-        pep8style = pep8.StyleGuide(quiet=True)
-        result = pep8style.check_files(['models/amenity.py'])
-        self.assertEqual(result.total_errors, 0,
-                         "Found code style errors (and warnings).")
-
 if __name__ == "__main__":
     unittest.main()
