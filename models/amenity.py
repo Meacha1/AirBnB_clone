@@ -10,3 +10,8 @@ class Amenity(BaseModel):
         name (str): empty string for the name of the amenity
     """
     name = ""
+
+
+    def __init__(self, *args, **kwargs):
+        """ Constructor """
+        super().__init__(self, *args, **kwargs)
