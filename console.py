@@ -34,6 +34,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Exit the program
         """
+        print()
         return True
 
     def emptyline(self):
