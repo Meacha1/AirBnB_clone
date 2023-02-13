@@ -11,11 +11,3 @@ class User(BaseModel):
     password = ""
     first_name = ""
     last_name = ""
-
-    # Document the constructor method for User
-    def __init__(self, *args, **kwargs):
-        """
-        Initializes a new User instance
-        """
-        # Call the parent constructor method to initialize the BaseModel attributes
-        super().__init__(*args, **kwargs)
