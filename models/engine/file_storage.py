@@ -1,83 +1,53 @@
 #!/usr/bin/python3
-"""Serializes instances to a JSON file and deserializes JSON file to instances"""
+""" FileStorage that serializes instances to a JSON file and deserializes JSON
+file to instances:
+"""
 
 import json
 from models.base_model import BaseModel
-from models.user import User
 from models.amenity import Amenity
 from models.city import City
 from models.place import Place
 from models.review import Review
 from models.state import State
+from models.user import User
 
 
-class FileStorage:
-    """Serializes instances to a JSON file and deserializes JSON file to instances"""
+class FileStorage():
+    """ serializes instances to a JSON file and deserializes JSON"""
 
-    __file_path = "file.json" # This is the path to the JSON file
-    __objects = {} # Empty dictionary to store objects later
+    __file_path = "file.json"  # path to the JSON file (ex: file.json)
+    __objects = {}  # dictionary - store all objects by <class name>.id
 
     def all(self):
-        """Returns the dictionary __objects"""
+        """  returns the dictionary __objects """
         return self.__objects
 
     def new(self, obj):
-        """Sets obj in __objects with key <obj class name>.id"""
-        key = "{}.{}".format(type(obj).__name__, obj.id)
+        """ sets in __objects the obj with key <obj class name>.id """
+        '''get key of the form <obj class name>.id '''
+        key = obj.__class__.__name__ + "." + str(obj.id)
         self.__objects[key] = obj
 
     def save(self):
-        """Serializes __objects to the JSON file"""
-        json_objects = {}
+        """serializes __objects to the JSON file (path: __file_path)"""
+
+        ''' create empty dictionary'''
+        json_object = {}
+        """ fill dictionary with elements __objects """
         for key in self.__objects:
-            json_objects[key] = self.__objects[key].to_dict()
-        with open(self.__file_path, "w") as f:
-            f.write(json.dumps(json_objects))
+            json_object[key] = self.__objects[key].to_dict()
+
+        with open(self.__file_path, 'w') as f:
+            json.dump(json_object, f)
 
     def reload(self):
-        """Deserializes the JSON file to __objects"""
+        """ deserializes the JSON file to __objects """
         try:
-            with open(self.__file_path, "r") as f:
-                json_objects = json.loads(f.read())
-                for key in json_objects:
-                    class_name = key.split(".")[0]
-                    self.__objects[key] = eval(class_name)(**json_objects[key])
+            with open(self.__file_path, 'r', encoding="UTF8") as f:
+                # jlo = json.load(f)
+                for key, value in json.load(f).items():
+                    attri_value = eval(value["__class__"])(**value)
+                    self.__objects[key] = attri_value
         except FileNotFoundError:
             pass
-    def attributes(self):
-        """Returns the valid attributes and their types for classname."""
-        attributes = {
-            "BaseModel":
-                     {"id": str,
-                      "created_at": datetime.datetime,
-                      "updated_at": datetime.datetime},
-            "User":
-                     {"email": str,
-                      "password": str,
-                      "first_name": str,
-                      "last_name": str},
-            "State":
-                     {"name": str},
-            "City":
-                     {"state_id": str,
-                      "name": str},
-            "Amenity":
-                     {"name": str},
-            "Place":
-                     {"city_id": str,
-                      "user_id": str,
-                      "name": str,
-                      "description": str,
-                      "number_rooms": int,
-                      "number_bathrooms": int,
-                      "max_guest": int,
-                      "price_by_night": int,
-                      "latitude": float,
-                      "longitude": float,
-                      "amenity_ids": list},
-            "Review":
-            {"place_id": str,
-                         "user_id": str,
-                         "text": str}
-        }
-        return attributes
