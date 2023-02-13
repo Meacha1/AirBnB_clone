@@ -216,6 +216,7 @@ class HBNBCommand(cmd.Cmd):
         num_instances = 0
         if not tokensA[0]:
             print("** class name missing **")
+            return
         if tokensA[0] not in self.classes:
             print("** class doesn't exist **")
             return
