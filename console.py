@@ -42,13 +42,7 @@ class HBNBCommand(cmd.Cmd):
         Do nothing when an empty line is entered
         """
         pass
-
-    def do_help(self, line):
-        """
-        Provide help for commands
-        """
-        print("Quit the program: quit or EOF")
-        
+      
     def do_create(self, argument):
         """Create a new instance of BaseModel, save it (to the JSON file) and print the id."""
         if argument:
