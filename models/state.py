@@ -11,7 +11,3 @@ class State(BaseModel):
         name (str): empty string for the name of the state
     """
     name = ""
-
-    def __init__(self, *args, **kwargs):
-        """ Constructor """
-        super().__init__(self, *args, **kwargs)
