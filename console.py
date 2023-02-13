@@ -209,19 +209,21 @@ class HBNBCommand(cmd.Cmd):
                     setattr(storage.all()[key], attribute, value)
                 storage.all()[key].save()
 
-    def do_count(self, line):
-        """Counts the instances of a class.
-        """
-        words = line.split(' ')
-        if not words[0]:
-            print("** class name missing **")
-        elif words[0] not in storage.classes():
+    def do_count(self, argument):
+        """  retrieve the number of instances of a class """
+        tokensA = shlex.split(argument)
+        dic = models.storage.all()
+        num_instances = 0
+        if tokensA[0] not in self.classes:
             print("** class doesn't exist **")
+            return
         else:
-            matches = [
-                k for k in storage.all() if k.startswith(
-                    words[0] + '.')]
-            print(len(matches))
+            for key in dic:
+                className = key.split('.')
+                if className[0] == tokensA[0]:
+                    num_instances += 1
+
+            print(num_instances)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
